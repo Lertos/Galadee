@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Dyn_MenuFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/MenuButton.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="Button" type="Button"]
+margin_right = 880.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 300, 100 )
+focus_mode = 0
+custom_styles/focus = SubResource( 1 )
+enabled_focus_mode = 0
+flat = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+scene_to_load = "res://TitleScreen.tscn"
+
+[node name="Label" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = ExtResource( 1 )
+text = "Back to Menu"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

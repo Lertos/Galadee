@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Sounds/bg_final_level.wav" type="AudioStream" id=1]
+[ext_resource path="res://Sounds/background_music.wav" type="AudioStream" id=2]
+[ext_resource path="res://Scripts/LevelManager.gd" type="Script" id=3]
+[ext_resource path="res://Sounds/game_over.wav" type="AudioStream" id=4]
+[ext_resource path="res://Sounds/health_loss.wav" type="AudioStream" id=5]
+[ext_resource path="res://Sounds/game_win.wav" type="AudioStream" id=6]
+[ext_resource path="res://Art/redScreen.png" type="Texture" id=7]
+[ext_resource path="res://ScreenShake.tscn" type="PackedScene" id=8]
+
+[sub_resource type="Animation" id=1]
+resource_name = "flashRed"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("redScreen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="root" type="Node"]
+script = ExtResource( 3 )
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -15.0
+
+[node name="BackgroundMusic_Final_Level" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+volume_db = -15.0
+
+[node name="Game_Over" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="Game_Win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="Health_Loss" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="redScreen" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( -25, -25 )
+z_index = 999
+texture = ExtResource( 7 )
+centered = false
+
+[node name="GetHit" type="AnimationPlayer" parent="."]
+anims/flashRed = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+
+[node name="ScreenShake" parent="Camera2D" instance=ExtResource( 8 )]

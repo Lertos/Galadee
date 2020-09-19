@@ -1,0 +1,107 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Art/ship.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/sprite_animation.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/player_movement.gd" type="Script" id=3]
+[ext_resource path="res://Art/Shield.png" type="Texture" id=4]
+[ext_resource path="res://Sounds/shield_activate.wav" type="AudioStream" id=5]
+[ext_resource path="res://Sounds/shield_deactivate.wav" type="AudioStream" id=6]
+[ext_resource path="res://Sounds/chargedown.wav" type="AudioStream" id=7]
+[ext_resource path="res://Sounds/chargeup.wav" type="AudioStream" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 10 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "FadeShield"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Shield:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Shield:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.490196 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "FadeShieldOut"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Shield:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.490196 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Shield:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 3 )
+
+[node name="sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+vframes = 2
+frame = 1
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -5 )
+scale = Vector2( 0.5, 0.7 )
+shape = SubResource( 1 )
+
+[node name="Shield" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 0, -3 )
+scale = Vector2( 1.1, 1.1 )
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/FadeShield = SubResource( 2 )
+anims/FadeShieldOut = SubResource( 3 )
+
+[node name="Shield_Activate" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = 4.038
+
+[node name="Shield_Deactivate" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = 3.029
+
+[node name="Bullet_Activate" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -2.391
+
+[node name="Bullet_Deactivate" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -3.586

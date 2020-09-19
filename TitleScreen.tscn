@@ -1,0 +1,102 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Buttons/ExitButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Buttons/LevelSelectButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Buttons/TutorialButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/TitleScreen.gd" type="Script" id=4]
+[ext_resource path="res://FadeIn.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Art/TitleScreenBackground.png" type="Texture" id=6]
+[ext_resource path="res://Sounds/title_bg_music.wav" type="AudioStream" id=7]
+[ext_resource path="res://Evil Empire.otf" type="DynamicFontData" id=8]
+
+[sub_resource type="Animation" id=1]
+resource_name = "RotateTitleBackground"
+length = 120.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TitleScreenBackground:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 120 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[sub_resource type="DynamicFont" id=2]
+size = 150
+outline_size = 4
+outline_color = Color( 0, 0.662745, 1, 1 )
+use_filter = true
+extra_spacing_char = 10
+font_data = ExtResource( 8 )
+
+[node name="TitleScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleScreenBackground" type="Sprite" parent="."]
+position = Vector2( 640, 360 )
+texture = ExtResource( 6 )
+
+[node name="RotateBackground" type="AnimationPlayer" parent="."]
+method_call_mode = 1
+anims/RotateTitleBackground = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_top = 26.0
+margin_right = 1280.0
+margin_bottom = 202.0
+custom_fonts/font = SubResource( 2 )
+text = "GALADEE"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="VBoxContainer" parent="."]
+margin_left = 200.0
+margin_top = 161.0
+margin_right = 1080.0
+margin_bottom = 681.0
+custom_constants/separation = 20
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelSelectButton" parent="Menu" instance=ExtResource( 2 )]
+margin_top = 90.0
+margin_right = 880.0
+margin_bottom = 190.0
+focus_mode = 2
+enabled_focus_mode = 2
+
+[node name="TutorialButton" parent="Menu" instance=ExtResource( 3 )]
+margin_top = 210.0
+margin_bottom = 310.0
+focus_mode = 2
+enabled_focus_mode = 2
+
+[node name="ExitButton" parent="Menu" instance=ExtResource( 1 )]
+margin_top = 330.0
+margin_bottom = 430.0
+focus_mode = 2
+enabled_focus_mode = 2
+
+[node name="Fade" parent="." instance=ExtResource( 5 )]
+visible = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -30.0
+autoplay = true
+[connection signal="fade_finished" from="Fade" to="." method="_on_Fade_fade_finished"]

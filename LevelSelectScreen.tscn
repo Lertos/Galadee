@@ -1,0 +1,133 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Buttons/Level3.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Buttons/Level1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Buttons/Level2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://FadeIn.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/LevelSelectScreen.gd" type="Script" id=5]
+[ext_resource path="res://Buttons/Level6.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Buttons/Level4.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Buttons/Level5.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Buttons/Level7.tscn" type="PackedScene" id=9]
+[ext_resource path="res://BackButton.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Art/TitleScreenBackground.png" type="Texture" id=11]
+[ext_resource path="res://Sounds/levelselect_bg.wav" type="AudioStream" id=12]
+
+[sub_resource type="Animation" id=1]
+resource_name = "RotateBackground"
+length = 120.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TitleScreenBackground:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 120 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[node name="LevelSelectScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleScreenBackground" type="Sprite" parent="."]
+position = Vector2( 640, 360 )
+rotation = 6.28319
+texture = ExtResource( 11 )
+
+[node name="RotateBackground" type="AnimationPlayer" parent="."]
+anims/RotateBackground = SubResource( 1 )
+
+[node name="MenuContainer" type="VBoxContainer" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 1180.0
+margin_bottom = 620.0
+custom_constants/separation = 23
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu1" type="HBoxContainer" parent="MenuContainer"]
+margin_right = 1080.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 1080, 150 )
+custom_constants/separation = 210
+alignment = 1
+
+[node name="Level1" parent="MenuContainer/Menu1" instance=ExtResource( 2 )]
+margin_left = 105.0
+margin_right = 255.0
+flat = true
+levelNumber = "1"
+
+[node name="Level2" parent="MenuContainer/Menu1" instance=ExtResource( 3 )]
+margin_left = 465.0
+margin_right = 615.0
+flat = true
+levelNumber = "2"
+
+[node name="Level3" parent="MenuContainer/Menu1" instance=ExtResource( 1 )]
+margin_left = 825.0
+margin_right = 975.0
+flat = true
+levelNumber = "3"
+
+[node name="Menu2" type="HBoxContainer" parent="MenuContainer"]
+margin_top = 173.0
+margin_right = 1080.0
+margin_bottom = 323.0
+rect_min_size = Vector2( 1080, 150 )
+custom_constants/separation = 210
+alignment = 1
+
+[node name="Level4" parent="MenuContainer/Menu2" instance=ExtResource( 7 )]
+margin_left = 105.0
+margin_right = 255.0
+flat = true
+
+[node name="Level5" parent="MenuContainer/Menu2" instance=ExtResource( 8 )]
+margin_left = 465.0
+margin_right = 615.0
+flat = true
+
+[node name="Level6" parent="MenuContainer/Menu2" instance=ExtResource( 6 )]
+margin_left = 825.0
+margin_right = 975.0
+flat = true
+
+[node name="Menu3" type="HBoxContainer" parent="MenuContainer"]
+margin_top = 346.0
+margin_right = 1080.0
+margin_bottom = 496.0
+rect_min_size = Vector2( 1080, 150 )
+alignment = 1
+
+[node name="Level7" parent="MenuContainer/Menu3" instance=ExtResource( 9 )]
+margin_left = 465.0
+margin_right = 615.0
+flat = true
+
+[node name="BackButton" parent="." instance=ExtResource( 10 )]
+margin_left = 32.0
+margin_top = 640.0
+margin_right = 312.0
+margin_bottom = 740.0
+rect_min_size = Vector2( 280, 100 )
+
+[node name="Fade" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[node name="BG_MUSIC" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -10.0
+autoplay = true
+[connection signal="fade_finished" from="Fade" to="." method="_on_Fade_fade_finished"]

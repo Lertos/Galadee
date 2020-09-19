@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://MenuButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Art/ButtonBorders.png" type="Texture" id=2]
+
+[node name="LevelSelectButton" instance=ExtResource( 1 )]
+margin_right = 512.0
+margin_bottom = 100.0
+scene_to_load = "res://LevelSelectScreen.tscn"
+
+[node name="Label" parent="." index="0"]
+text = "Level Select"
+
+[node name="ButtonBorders" type="Sprite" parent="." index="2"]
+position = Vector2( 230, 50 )
+texture = ExtResource( 2 )
